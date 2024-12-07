@@ -103,6 +103,7 @@ function submitNewPlaceForm(evt) {
   }
   const newCard = createCard(newCardValues, deleteCard, likeCard, openImage);
   cardsList.prepend(newCard);
+  formNewPlace.reset();
   closeModal(popupNewCard);
 }
 
