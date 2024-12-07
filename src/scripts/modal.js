@@ -1,6 +1,29 @@
-const editPopup = document.getElementById('editPopup')
-const editOpener = document.querySelector('.profile__edit-button')
-const editClose = editPopup.querySelector('.popup__close')
+// Функция открытия попапа
+function openModal(element) {
+  element.classList.add('popup_is-opened');
+  document.addEventListener('keydown', closeModalByKeydown);
+  element.addEventListener('mousedown', closeModalWithOverlay);
+}
 
-// Работу модальных окон — в файл modal.js. Оттуда экспортируйте функции openModal и closeModal, принимающие в качестве аргумента DOM-элемент модального окна, с которым нужно произвести действие.
-// описаны функции для работы с модальными окнами: функция открытия модального окна, функция закрытия модального окна, функция-обработчик события нажатия Esc и функция-обработчик события клика по оверлею;
+ // Функция закрытия попапа
+function closeModal(element) {
+  document.removeEventListener('keydown', closeModalByKeydown);
+  element.removeEventListener('mousedown', closeModalWithOverlay);
+  element.classList.remove('popup_is-opened');
+}
+
+ // Функция закрытия попапа нажатием на Esc
+function closeModalByKeydown(evt) {
+  if (evt.key === 'Escape') {
+    closeModal(document.querySelector('.popup_is-opened'));
+  }
+}
+
+ // Функция закрытия попапа кликом на оверлэй
+function closeModalWithOverlay(evt) {
+  if (evt.target === evt.currentTarget) {
+    closeModal(evt.currentTarget);
+  }
+}
+
+export {openModal, closeModal};
