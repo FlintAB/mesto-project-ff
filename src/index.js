@@ -45,7 +45,6 @@ profileEditButton.addEventListener('click', () => {
 
 profileAddButton.addEventListener('click', () => {
   openModal(popupNewCard);
-  formNewPlace.reset();
 })
 
 editProfileCloseButton.addEventListener('click', () => {
@@ -102,7 +101,7 @@ function submitNewPlaceForm(evt) {
       name: cardNameInput.value,
       link: urlInput.value
   }
-  const newCard = createCard(newCardValues, deleteCard);
+  const newCard = createCard(newCardValues, deleteCard, likeCard, openImage);
   cardsList.prepend(newCard);
   closeModal(popupNewCard);
 }
