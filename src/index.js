@@ -2,7 +2,7 @@ import './pages/index.css';
 import { createCard, getCurrentCard } from './scripts/card.js';
 import { openModal, closeModal } from './scripts/modal.js';
 import { enableValidation, clearValidation, validationConfig} from './scripts/validation.js';
-import { getUserInfo, getInitialCards, editProfile, addCard, deleteCard, changeAvatar, validateImageUrl, renderLoading } from './scripts/api.js';
+import { getUserInfo, getInitialCards, editProfile, addCard, deleteCard, changeAvatar, validateImageUrl, handleSubmit } from './scripts/api.js';
 
 const profileForm = document.forms['edit-profile'];
 const profileFormNameInput = profileForm.querySelector('.popup__input_type_name');
