@@ -6,9 +6,7 @@
   "scripts": {
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "build": "webpack --mode production",
-    "dev": "webpack serve",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "dev": "webpack serve"
   },
   "author": "",
   "license": "ISC",

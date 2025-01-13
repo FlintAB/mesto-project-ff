@@ -1,27 +1,23 @@
-// Функция открытия попапа
-export function openModal(element) {
-  element.classList.add('popup_is-opened');
-  document.addEventListener('keydown', closeModalByKeydown);
-  element.addEventListener('mousedown', closeModalWithOverlay);
+function onOverlayClick(event) {
+  if (event.target === event.currentTarget) {
+    closeModal(event.currentTarget);
+  }
 }
 
- // Функция закрытия попапа
-export function closeModal(element) {
-  document.removeEventListener('keydown', closeModalByKeydown);
-  element.removeEventListener('mousedown', closeModalWithOverlay);
-  element.classList.remove('popup_is-opened');
-}
-
- // Функция закрытия попапа нажатием на Esc
-function closeModalByKeydown(evt) {
-  if (evt.key === 'Escape') {
+function onEscapeKeyDown(event) {
+  if (event.key === 'Escape') {
     closeModal(document.querySelector('.popup_is-opened'));
   }
 }
 
- // Функция закрытия попапа кликом на оверлэй
-function closeModalWithOverlay(evt) {
-  if (evt.target === evt.currentTarget) {
-    closeModal(evt.currentTarget);
-  }
+export function openModal(popup) {
+  popup.classList.add('popup_is-opened');
+  document.addEventListener('keydown', onEscapeKeyDown);
+  popup.addEventListener('mousedown', onOverlayClick);
+}
+
+export function closeModal(popup) {
+  popup.classList.remove('popup_is-opened');
+  document.removeEventListener('keydown', onEscapeKeyDown);
+  popup.removeEventListener('mousedown', onOverlayClick);
 }
