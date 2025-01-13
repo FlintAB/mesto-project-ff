@@ -79,12 +79,3 @@ export function validateImageUrl(url) {
    return fetch(url, { method: 'HEAD', mode: 'no-cors' })
    .then((response) => response.ok)
 }
-
-export function renderLoading(
-   isLoading,
-   button,
-   buttonText = 'Сохранить',
-   loadingText = 'Сохранение...',
-) {
-   button.textContent = isLoading ? loadingText : buttonText;
-}
