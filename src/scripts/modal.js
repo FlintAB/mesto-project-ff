@@ -1,12 +1,12 @@
 // Функция открытия попапа
-function openModal(element) {
+export function openModal(element) {
   element.classList.add('popup_is-opened');
   document.addEventListener('keydown', closeModalByKeydown);
   element.addEventListener('mousedown', closeModalWithOverlay);
 }
 
  // Функция закрытия попапа
-function closeModal(element) {
+export function closeModal(element) {
   document.removeEventListener('keydown', closeModalByKeydown);
   element.removeEventListener('mousedown', closeModalWithOverlay);
   element.classList.remove('popup_is-opened');
@@ -25,5 +25,3 @@ function closeModalWithOverlay(evt) {
     closeModal(evt.currentTarget);
   }
 }
-
-export {openModal, closeModal};

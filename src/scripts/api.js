@@ -1,0 +1,108 @@
+const config = {
+   baseUrl: 'https://nomoreparties.co/v1/cohort-mag-4',
+   headers: {
+   authorization: '8852b915-c1e4-4676-a2f8-d48c8877631b',
+   'Content-Type': 'application/json',
+   },
+};
+
+async function checkResponse(response) {
+   if (!response.ok) {
+   const errorText = await response.text();
+   return Promise.reject(`Ошибка ${response.status}: ${errorText}`);
+   }
+   return response.json();
+}
+
+function request(endpoint, options = {}) {
+   return fetch(`${config.baseUrl}${endpoint}`, {
+   headers: config.headers,
+   ...options,
+   }).then(checkResponse)
+}
+
+export function getUserInfo() {
+   return request('/users/me');
+}
+
+export function getInitialCards() {
+   return request('/cards');
+}
+
+export function editProfile(nameValue, jobValue) {
+   return request('/users/me', {
+   method: 'PATCH',
+   body: JSON.stringify({
+      name: nameValue,
+      about: jobValue,
+   }),
+   });
+}
+
+export function addCard(nameValue, linkValue) {
+   return request('/cards', {
+   method: 'POST',
+   body: JSON.stringify({
+      name: nameValue,
+      link: linkValue,
+   }),
+   });
+}
+
+export function deleteCard(cardId) {
+   return request(`/cards/${cardId}`, {
+   method: 'DELETE',
+   });
+}
+
+export function changeLikeStatus(cardId, isLiked) {
+   return request(`/cards/likes/${cardId}`, {
+   method: isLiked ? 'DELETE' : 'PUT',
+   });
+}
+
+export function changeAvatar(avatarLink) {
+   return request('/users/me/avatar', {
+   method: 'PATCH',
+   body: JSON.stringify({
+      avatar: avatarLink,
+   }),
+   });
+}
+
+export function validateImageUrl(url) {
+   const urlPattern = /\.(jpeg|jpg|gif|png)$/i;
+   if (!urlPattern.test(url)) {
+   console.error('Неверный формат URL изображения');
+   return Promise.reject('Invalid image URL format');
+   }
+   return fetch(url, { method: 'HEAD', mode: 'no-cors' })
+   .then((response) => response.ok)
+}
+
+export function renderLoading(
+   isLoading,
+   button,
+   buttonText = 'Сохранить',
+   loadingText = 'Сохранение...',
+) {
+   button.textContent = isLoading ? loadingText : buttonText;
+}
+
+export function handleSubmit(request, event, loadingText = 'Сохранение...') {
+   event.preventDefault();
+
+   const submitButton = event.submitter;
+   const initialText = submitButton.textContent;
+
+   renderLoading(true, submitButton, initialText, loadingText);
+
+   request()
+   .then(() => {
+      event.target.reset();
+   })
+   .catch(console.error)
+   .finally(() => {
+      renderLoading(false, submitButton, initialText);
+   });
+}
